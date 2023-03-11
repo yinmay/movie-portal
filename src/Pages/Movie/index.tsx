@@ -32,7 +32,7 @@ const Movie = () => {
           if (key === 'Poster') {
             return (
               <Descriptions.Item label={key} key={key}>
-                <img src={movie[key]} style={styles.poster} />
+                <img src={movie[key]} style={styles.poster} alt="poster image" />
               </Descriptions.Item>
             )
           }
