@@ -1,6 +1,7 @@
 import React from 'react'
 import { Input, Form as AntdForm, Button, Space } from 'antd'
 import FormItem from 'antd/lib/form/FormItem'
+import type { FormInstance } from 'antd/es/form'
 
 export const ITEM_TYPE = {
   INPUT: 'Input',
@@ -9,10 +10,20 @@ export const ITEM_TYPE = {
 const cpnAlias = {
   [ITEM_TYPE.INPUT]: Input,
 }
-interface IItem {
+export interface IItem {
   type: string
   label: string
   field: string
+  itemProps: IProps
+}
+
+interface IProps {
+  rules: IRule[]
+}
+
+interface IRule {
+  required?: boolean
+  message?: string
 }
 
 interface IForm {
@@ -24,25 +35,28 @@ interface IForm {
 const createFormItem = (type: string) => cpnAlias[type]
 
 const Form: React.FC<IForm> = ({ onFinish, dataSource, handleReset }) => {
+  const formRef = React.useRef<FormInstance>(null)
+
   return (
-    <AntdForm onFinish={onFinish} layout="inline">
+    <AntdForm ref={formRef} onFinish={onFinish} layout="inline">
+      {dataSource.map((item: IItem) => {
+        const Component = createFormItem(item.type)
+
+        return (
+          <FormItem name={item.label} key={item.label} {...item.itemProps}>
+            <Component />
+          </FormItem>
+        )
+      })}
       <Space>
-        {dataSource.map((item: IItem) => {
-          const Component = createFormItem(item.type)
-
-          return (
-            <FormItem name={item.label}>
-              <Component />
-            </FormItem>
-          )
-        })}
-
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-        <Button htmlType="reset" onClick={handleReset}>
-          Reset
-        </Button>
+        <FormItem>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+          <Button htmlType="reset" onClick={handleReset}>
+            Reset
+          </Button>
+        </FormItem>
       </Space>
     </AntdForm>
   )

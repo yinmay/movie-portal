@@ -38,6 +38,9 @@ const getItemConfig = () => {
       label: 'search',
       field: 'search',
       type: ITEM_TYPE.INPUT,
+      itemProps: {
+        rules: [],
+      },
     },
   ]
 }

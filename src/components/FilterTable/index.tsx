@@ -3,6 +3,8 @@ import { Space, Table } from 'antd'
 import Form from '../Form'
 import { Data, Column, ITableConfig } from '../../Pages/Dashboard'
 
+import { IItem } from '../Form'
+
 interface IFilterTable {
   formConfig: IFormConfig
   dataSource: Data[] | []
@@ -11,15 +13,9 @@ interface IFilterTable {
 }
 
 interface IFormConfig {
-  dataSource: IFormItem[]
+  dataSource: IItem[]
   onFinish: (values: any) => void
   handleReset: () => void
-}
-
-interface IFormItem {
-  type: string
-  field: string
-  label: string
 }
 
 const FilterTable: React.FC<IFilterTable> = ({ formConfig, tableConfig, dataSource, columns }) => {
