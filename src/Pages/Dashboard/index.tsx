@@ -2,59 +2,34 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import FilterTable from '../../components/FilterTable'
 import request from '../../util/request'
-import { ITEM_TYPE } from '../../components/Form'
+import { getTableColumnConfig, getItemConfig } from './config'
+import FilterTable from '../../components/FilterTable'
 
-const getTableColumnConfig = () => {
-  return [
-    {
-      title: 'Title',
-      dataIndex: 'Title',
-      key: 'Title',
-    },
-    {
-      title: 'Year',
-      dataIndex: 'Year',
-      key: 'Year',
-    },
-    {
-      title: 'Type',
-      dataIndex: 'Type',
-      key: 'Type',
-    },
-    {
-      title: 'Poster Image',
-      dataIndex: 'Poster',
-      key: 'Poster',
-      render: (url: string) => <img style={{ height: 100 }} alt="poster image" src={url} />,
-    },
-  ]
-}
-
-export interface IMovie {
+export interface Data {
   Title: string
   Year: string
+  Type: string
   imdbID: string
   Poster: string
 }
 
-const getFormConfig = () => {
-  return [
-    {
-      label: 'search',
-      field: 'search',
-      type: ITEM_TYPE.INPUT,
-    },
-  ]
+export type Column = {
+  title: string
+  dataIndex: string
+  key: string
+}
+
+export interface ITableConfig {
+  onRow: (value: any) => void
 }
 
 const Dashboard: React.FC = () => {
-  const [list, setList] = useState<Record<string, string>[] | []>([])
-  const tableColumnConfig = getTableColumnConfig()
+  const [list, setList] = useState<Data[] | []>([])
   const navigate = useNavigate()
-  const formConfig = getFormConfig()
-  const onFinish = (values: Record<string, string>) => {
+  const tableColumnConfig = getTableColumnConfig()
+
+  const onFinish = (values: any) => {
     request({
       method: 'get',
       params: { s: values.search },
@@ -62,15 +37,17 @@ const Dashboard: React.FC = () => {
       setList(resp.Search)
     })
   }
-  const handleClick = (record: IMovie) => {
+
+  const handleClick = (record: Data) => {
     const id = record.imdbID
     if (id) {
       navigate(`/${id}`, { state: { id } })
     }
   }
-  const getRestTableConfig = () => {
+
+  const getTableConfig = () => {
     return {
-      onRow: (record: IMovie) => {
+      onRow: (record: Data) => {
         return {
           onClick: () => handleClick(record),
         }
@@ -78,16 +55,23 @@ const Dashboard: React.FC = () => {
     }
   }
 
-  const restTableConfig = getRestTableConfig()
+  const getFormConfig = () => {
+    return {
+      dataSource: getItemConfig(),
+      onFinish,
+    }
+  }
+
+  const tableConfig = getTableConfig()
+  const formConfig = getFormConfig()
 
   return (
     <div>
       <FilterTable
+        dataSource={list}
+        columns={tableColumnConfig}
         formConfig={formConfig}
-        tableColumn={tableColumnConfig}
-        onFinish={onFinish}
-        tableData={list}
-        restTableConfig={restTableConfig}
+        tableConfig={tableConfig}
       />
     </div>
   )

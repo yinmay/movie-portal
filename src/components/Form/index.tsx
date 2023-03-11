@@ -17,7 +17,7 @@ interface IItem {
 
 interface IForm {
   dataSource: IItem[]
-  onFinish: (values: Record<string, string>) => void
+  onFinish: (values: any) => void
 }
 
 const createFormItem = (type: string) => cpnAlias[type]
