@@ -39,24 +39,23 @@ const Form: React.FC<IForm> = ({ onFinish, dataSource, handleReset }) => {
 
   return (
     <AntdForm ref={formRef} onFinish={onFinish} layout="inline">
-      {dataSource.map((item: IItem) => {
-        const Component = createFormItem(item.type)
-
-        return (
-          <FormItem name={item.label} key={item.label} {...item.itemProps}>
-            <Component />
-          </FormItem>
-        )
-      })}
       <Space>
-        <FormItem>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-          <Button htmlType="reset" onClick={handleReset}>
-            Reset
-          </Button>
-        </FormItem>
+        {dataSource.map((item: IItem) => {
+          const Component = createFormItem(item.type)
+
+          return (
+            <FormItem name={item.label} key={item.label} {...item.itemProps}>
+              <Component />
+            </FormItem>
+          )
+        })}
+
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+        <Button htmlType="reset" onClick={handleReset}>
+          Reset
+        </Button>
       </Space>
     </AntdForm>
   )
