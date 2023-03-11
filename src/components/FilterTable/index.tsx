@@ -24,13 +24,12 @@ interface IFormItem {
 const FilterTable: React.FC<IFilterTable> = ({ formConfig, tableConfig, dataSource, columns }) => {
   return (
     <div>
-      <div>
-        <Space wrap>
-          <Form {...formConfig} />
-        </Space>
-      </div>
-      {/* @ts-ignore */}
-      <Table dataSource={dataSource} columns={columns} {...tableConfig}></Table>
+      <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <Form {...formConfig} />
+
+        {/* @ts-ignore */}
+        <Table dataSource={dataSource} columns={columns} {...tableConfig}></Table>
+      </Space>
     </div>
   )
 }

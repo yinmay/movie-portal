@@ -24,25 +24,23 @@ const createFormItem = (type: string) => cpnAlias[type]
 
 const Form: React.FC<IForm> = ({ onFinish, dataSource }) => {
   return (
-    <>
-      <AntdForm onFinish={onFinish} layout="inline">
-        {dataSource.map((item: IItem) => {
-          const Component = createFormItem(item.type)
+    <AntdForm onFinish={onFinish} layout="inline">
+      {dataSource.map((item: IItem) => {
+        const Component = createFormItem(item.type)
 
-          return (
-            <FormItem name={item.label}>
-              <Component />
-            </FormItem>
-          )
-        })}
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-          <Button htmlType="reset">Submit</Button>
-        </Space>
-      </AntdForm>
-    </>
+        return (
+          <FormItem name={item.label}>
+            <Component />
+          </FormItem>
+        )
+      })}
+      <Space>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+        <Button htmlType="reset">Submit</Button>
+      </Space>
+    </AntdForm>
   )
 }
 

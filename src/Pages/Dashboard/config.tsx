@@ -2,6 +2,10 @@
 import React from 'react'
 import { ITEM_TYPE } from '../../components/Form'
 
+const styles = {
+  poster: { height: 100 },
+}
+
 const getTableColumnConfig = () => {
   return [
     {
@@ -23,7 +27,7 @@ const getTableColumnConfig = () => {
       title: 'Poster Image',
       dataIndex: 'Poster',
       key: 'Poster',
-      render: (url: string) => <img style={{ height: 100 }} alt="poster image" src={url} />,
+      render: (url: string) => <img style={styles.poster} alt="poster image" src={url} />,
     },
   ]
 }
@@ -38,4 +42,4 @@ const getItemConfig = () => {
   ]
 }
 
-export { getTableColumnConfig, getItemConfig }
+export { getTableColumnConfig, getItemConfig, styles }
