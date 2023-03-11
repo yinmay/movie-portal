@@ -16,15 +16,15 @@ function App() {
       <Content>
         <div className="site-layout-content">
           <Router>
-            <div>
+            <div className="breadcrumbs-wrapper">
               <Breadcrumbs />
+            </div>
 
-              <div className="site-layout-content">
-                <Routes>
-                  <Route path="/:id" element={<Movie />}></Route>
-                  <Route path="/" element={<Dashboard />}></Route>
-                </Routes>
-              </div>
+            <div className="site-layout-content">
+              <Routes>
+                <Route path="/:id" element={<Movie />}></Route>
+                <Route path="/" element={<Dashboard />}></Route>
+              </Routes>
             </div>
           </Router>
         </div>

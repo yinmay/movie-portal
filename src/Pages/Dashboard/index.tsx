@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Space } from 'antd'
 
 import request from '../../util/request'
 import { getTableColumnConfig, getItemConfig } from './config'
@@ -52,6 +53,9 @@ const Dashboard: React.FC = () => {
           onClick: () => handleClick(record),
         }
       },
+      pagination: false,
+      size: 'small',
+      scroll: { x: 1500, y: '60vh' },
     }
   }
 
@@ -59,6 +63,7 @@ const Dashboard: React.FC = () => {
     return {
       dataSource: getItemConfig(),
       onFinish,
+      handleReset: () => setList([]),
     }
   }
 
@@ -67,12 +72,14 @@ const Dashboard: React.FC = () => {
 
   return (
     <div>
-      <FilterTable
-        dataSource={list}
-        columns={tableColumnConfig}
-        formConfig={formConfig}
-        tableConfig={tableConfig}
-      />
+      <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <FilterTable
+          dataSource={list}
+          columns={tableColumnConfig}
+          formConfig={formConfig}
+          tableConfig={tableConfig}
+        />
+      </Space>
     </div>
   )
 }

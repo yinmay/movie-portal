@@ -18,27 +18,31 @@ interface IItem {
 interface IForm {
   dataSource: IItem[]
   onFinish: (values: any) => void
+  handleReset: () => void
 }
 
 const createFormItem = (type: string) => cpnAlias[type]
 
-const Form: React.FC<IForm> = ({ onFinish, dataSource }) => {
+const Form: React.FC<IForm> = ({ onFinish, dataSource, handleReset }) => {
   return (
     <AntdForm onFinish={onFinish} layout="inline">
-      {dataSource.map((item: IItem) => {
-        const Component = createFormItem(item.type)
-
-        return (
-          <FormItem name={item.label}>
-            <Component />
-          </FormItem>
-        )
-      })}
       <Space>
+        {dataSource.map((item: IItem) => {
+          const Component = createFormItem(item.type)
+
+          return (
+            <FormItem name={item.label}>
+              <Component />
+            </FormItem>
+          )
+        })}
+
         <Button type="primary" htmlType="submit">
           Submit
         </Button>
-        <Button htmlType="reset">Submit</Button>
+        <Button htmlType="reset" onClick={handleReset}>
+          Reset
+        </Button>
       </Space>
     </AntdForm>
   )

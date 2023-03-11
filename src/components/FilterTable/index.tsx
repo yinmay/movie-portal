@@ -13,6 +13,7 @@ interface IFilterTable {
 interface IFormConfig {
   dataSource: IFormItem[]
   onFinish: (values: any) => void
+  handleReset: () => void
 }
 
 interface IFormItem {
