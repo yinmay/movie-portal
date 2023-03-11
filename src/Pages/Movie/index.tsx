@@ -5,13 +5,14 @@ import { Descriptions } from 'antd'
 import request from '../../util/request'
 import { styles } from '../Dashboard/config'
 
-type Record<K extends string, T> = {
-  [P in K]: T
+interface IMovie {
+  [key: string]: string | []
+  Poster: string
 }
 const Movie = () => {
   const location = useLocation()
 
-  const [movie, setMovie] = useState<Record<string, string> | {}>({})
+  const [movie, setMovie] = useState<IMovie>({ Poster: '' })
 
   useEffect(() => {
     request({
@@ -28,15 +29,15 @@ const Movie = () => {
   return (
     <div>
       <Descriptions title="Movie Summary">
-        {Object.keys(movie).map(key => {
+        {Object.keys(movie).map((key: string) => {
           if (key === 'Poster') {
             return (
-              <Descriptions.Item label={key} key={key}>
+              <Descriptions.Item label="poster" key={key}>
                 <img src={movie[key]} style={styles.poster} alt="poster image" />
               </Descriptions.Item>
             )
           }
-          if (!Array.isArray(movie[key])) {
+          if (key && !Array.isArray(movie[key])) {
             return (
               <Descriptions.Item label={key} key={key}>
                 {movie[key]}
