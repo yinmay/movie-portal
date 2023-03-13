@@ -44,14 +44,7 @@
     ]
   },
   "devDependencies": {
-    "husky": "^8.0.3",
     "prettier": "2.8.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "prettier": {
     "singleQuote": true,
